@@ -1,0 +1,19 @@
+{
+  "name": "tehtavanhallinta",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "npm install && npx prisma init --datasource-provider mysql && npx prisma db pull && npx prisma generate"
+  },
+
+  "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sanitize-html": "^2.13.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.12.1"
+  }
+}

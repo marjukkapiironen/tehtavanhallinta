@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model jasen {
+  jasen_id       Int             @id @default(autoincrement())
+  jasen_nimi     String          @db.Text
+  kayttajatunnus String          @db.Text
+  salasana       String          @db.Text
+  tehtava_jasen  tehtava_jasen[]
+}
+
+model tehtava {
+  tehtava_id    Int             @id @default(autoincrement())
+  tehtava_nimi  String          @db.Text
+  kuvaus        String?         @db.Text
+  deadline      DateTime?       @db.DateTime(0)
+  tehtava_jasen tehtava_jasen[]
+}
+
+model tehtava_jasen {
+  tehtava_id Int
+  jasen_id   Int
+  tehtava    tehtava @relation(fields: [tehtava_id], references: [tehtava_id], onDelete: Cascade, onUpdate: Restrict, map: "tehtava_jasen_ibfk_1")
+  jasen      jasen   @relation(fields: [jasen_id], references: [jasen_id], onDelete: Cascade, onUpdate: Restrict, map: "tehtava_jasen_ibfk_2")
+
+  @@id([tehtava_id, jasen_id])
+  @@index([jasen_id], map: "jasen_id")
+}
