@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -19,7 +19,7 @@ model tehtava {
   tehtava_id    Int             @id @default(autoincrement())
   tehtava_nimi  String          @db.Text
   kuvaus        String?         @db.Text
-  deadline      DateTime?       @db.DateTime(0)
+  deadline      DateTime?       @db.Timestamp
   tehtava_jasen tehtava_jasen[]
 }
 

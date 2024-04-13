@@ -3,9 +3,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "npm install && npx prisma init --datasource-provider mysql && npx prisma db pull && npx prisma generate"
+    "build": "npm install && npx prisma db push && npx prisma generate"
   },
-
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "dotenv": "^16.4.5",
