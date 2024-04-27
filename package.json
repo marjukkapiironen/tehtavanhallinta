@@ -3,7 +3,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "npm install && npx prisma db push && npx prisma db seed && npx prisma generate"
+    "build": "npm install"
   },
   "engines": {
     "node": "16.x"
