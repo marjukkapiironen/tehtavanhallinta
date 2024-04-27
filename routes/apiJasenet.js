@@ -32,33 +32,4 @@ apiJasenetRouter.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, 
         next(new virhekasittelija_1.Virhe());
     }
 }));
-apiJasenetRouter.get("/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        let id = Number(req.params.id);
-        if (!isNaN(id)) {
-            let tehtavaData = yield prisma.tehtava.findUnique({
-                where: { tehtava_id: id },
-                include: {
-                    tehtava_jasen: {
-                        include: {
-                            jasen: {
-                                select: {
-                                    jasen_id: true,
-                                    jasen_nimi: true,
-                                }
-                            },
-                        },
-                    },
-                },
-            });
-            res.json(tehtavaData);
-        }
-        else {
-            next(new virhekasittelija_1.Virhe(400, "Virheellinen id"));
-        }
-    }
-    catch (e) {
-        next(new virhekasittelija_1.Virhe());
-    }
-}));
 exports.default = apiJasenetRouter;
