@@ -27,7 +27,6 @@ apiTehtavatRouter.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0,
                     include: {
                         jasen: {
                             select: {
-                                jasen_id: true,
                                 jasen_nimi: true,
                             }
                         },
@@ -44,22 +43,21 @@ apiTehtavatRouter.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0,
 apiTehtavatRouter.get("/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let id = Number(req.params.id);
-        if (!isNaN(id)) {
-            let tehtavaData = yield prisma.tehtava.findUnique({
-                where: { tehtava_id: id },
-                include: {
-                    tehtava_jasen: {
-                        include: {
-                            jasen: {
-                                select: {
-                                    jasen_id: true,
-                                    jasen_nimi: true,
-                                }
-                            },
+        const tehtavaData = yield prisma.tehtava.findUnique({
+            where: { tehtava_id: id },
+            include: {
+                tehtava_jasen: {
+                    include: {
+                        jasen: {
+                            select: {
+                                jasen_nimi: true,
+                            }
                         },
                     },
                 },
-            });
+            },
+        });
+        if (tehtavaData) {
             res.json(tehtavaData);
         }
         else {
@@ -83,7 +81,16 @@ apiTehtavatRouter.post("/", (req, res, next) => __awaiter(void 0, void 0, void 0
                 },
             },
             include: {
-                tehtava_jasen: true,
+                tehtava_jasen: {
+                    select: {
+                        jasen: {
+                            select: {
+                                jasen_id: true,
+                                jasen_nimi: true,
+                            }
+                        },
+                    },
+                },
             },
         });
         res.status(201).json(uusiTehtava);
@@ -113,7 +120,7 @@ apiTehtavatRouter.put("/:id", (req, res, next) => __awaiter(void 0, void 0, void
                 tehtava_jasen: true,
             },
         });
-        res.status(200).json(paivitettyTehtava);
+        res.json(paivitettyTehtava);
     }
     catch (error) {
         next(new virhekasittelija_1.Virhe());
